@@ -13,7 +13,7 @@ Requirements:
 $ bundle install
 $ rails server
 ```
-#Routes
+# Routes
 
 ```
         Prefix Verb   URI Pattern                       Controller#Action
@@ -22,7 +22,7 @@ $ rails server
        reading GET    /readings/:id(.:format)           readings#show
 
 ```
-###Postman Collection
+### Postman Collection
 
 ```json
   {
