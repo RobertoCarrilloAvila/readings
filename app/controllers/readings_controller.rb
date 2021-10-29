@@ -40,7 +40,7 @@ class ReadingsController < ApplicationController
             type: 'object',
             properties: {
               timestamp: { type: 'string' },
-              count: { type: 'integer' }
+              count: { type: ['integer', 'string'] }
             }
           }
         }
