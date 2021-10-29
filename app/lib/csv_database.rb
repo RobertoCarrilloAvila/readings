@@ -16,16 +16,16 @@ module CsvDatabase
     end
 
     def all
-      CSV.read(csv_file_path)
+      CSV.read(csv_file_path).map { |row| parse_obj(row) }
     end
   
     def find(id)
-      all.select { |row| row.first == id }.first
+      row = all.select { |row| row.id == id }.first
     end
   
     def where(column, value)
       raise ArgumentError.new 'Unknown column' unless @@csv_attr.include?(column)
-      all.select { |row| row[column] == value }
+      all.select { |row| row.send(column) == value }
     end
   
     def delete_all
@@ -38,6 +38,10 @@ module CsvDatabase
     end
 
     private
+
+    def parse_obj(row)
+      new(attr.zip(row[0...attr.length]).to_h)
+    end
   
     def csv_attr(*attr)
       attr.map!(&:to_sym)
@@ -58,7 +62,7 @@ module CsvDatabase
 
   def initialize(args = {})
     raise 'ArgumentError' unless args.is_a?(Hash)
-    set_if_not_exists
+    self.class.send(:set_if_not_exists)
     set_attr(args.transform_keys(&:to_sym))
   end
 
