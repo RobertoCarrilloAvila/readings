@@ -10,7 +10,7 @@ module CsvDatabase
     def create(args)
       obj = new(args)
       CSV.open(csv_file_path, "a") do |csv|
-        csv << obj.to_a unless exist?(obj)
+        csv << obj.to_a
       end
       obj
     end
@@ -37,11 +37,11 @@ module CsvDatabase
       @@csv_attr
     end
 
-    private
-
     def exist?(instance)
       all.select { |obj| obj.to_a == instance.to_a }.any?
     end
+    
+    private
 
     def parse_obj(row)
       new(attr.zip(row[0...attr.length]).to_h)
