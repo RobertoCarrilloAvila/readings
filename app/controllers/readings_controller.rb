@@ -5,13 +5,15 @@ class ReadingsController < ApplicationController
   def create
     id = params[:id]
     readings = params[:readings].each do |reading|
-      Reading.create(id: id, timestamp: reading[:timestamp], count: reading[:count])
+      read = Reading.new(id: id, timestamp: reading[:timestamp], count: reading[:count])
+      Reading.create(read.as_json) unless Reading.exist?(read)
     end
     head :created
   end
 
   def show
-    render json: Reading.find(params[:id])
+    readings = Reading.where(:id, params[:id])
+    render json: readings.sort_by { |reading| DateTime.iso8601(reading.timestamp) }.first
   end
 
   def count
@@ -35,7 +37,7 @@ class ReadingsController < ApplicationController
         id: { type: 'string' },
         readings: {
           type: 'array',
-          minItems: 2,
+          minItems: 1,
           items: {
             type: 'object',
             properties: {
