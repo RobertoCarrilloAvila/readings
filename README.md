@@ -1,7 +1,11 @@
 # Readings
 
 ## Description
-Small API to create, find, or count readings without use a csv file as a database
+Small API using the MVC design to create, find, or count readings without use a csv file as a database.
+
+The project implements a CSV persistence module that has methods very similar used by activerecord for its models like all, find, where, etc.
+
+Each model generates a csv file to save the records based in the fields declared in the method 'csv_attr'
 
 ## Installation
 Requirements:
@@ -13,6 +17,13 @@ Requirements:
 $ bundle install
 $ rails server
 ```
+
+## Tests
+To run the test use the following command
+```
+$ bundle exec rails test
+```
+
 # Routes
 
 ```
