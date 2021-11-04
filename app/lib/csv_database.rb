@@ -54,7 +54,7 @@ module CsvDatabase
     end
   
     def csv_file_path
-      Rails.root.join('storage', "#{self.name.underscore}.csv").to_s
+      Rails.root.join('storage', "#{self.name.underscore}_#{Rails.env}.csv").to_s
     end
   
     def set_if_not_exists
